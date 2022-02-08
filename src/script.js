@@ -9,7 +9,7 @@ function addProduct()
 
     if(checkData(pid, pname, pprice))
     {
-        insertData(pid, pname, pprice);
+        checkDuplicacy(pid, pname, pprice);
         display();
     }
     
@@ -36,15 +36,40 @@ function checkData(pid, pname, pprice)
 
 }
 
+function checkDuplicacy(pid, pname, pprice){
+    if(arr.length ===0 )
+    {
+       insertData(pid, pname, pprice);
+       return;
+    }
+    else{
+        for(let i=0; i<arr.length; i++)
+        {
+            if(arr[i].id== pid)
+            {
+                alert("Duplicate ID");
+                return;
+            }            
+        }
+        insertData(pid, pname, pprice);
+       
+    }
+}
+
 
 function insertData(pid, pname, pprice)
 {
+   
     arr.push({
         "id": pid,
         "name": pname,
         "price": pprice
     });
+    console.log(arr);
+    
 }
+
+
 
 function display()
 {
@@ -58,18 +83,60 @@ function display()
         
         for(let i=0; i<arr.length; i++)
         {
-            result +=`<tr><td>${arr[i].id}</td><td>${arr[i].name}</td><td>${arr[i].price}</td></tr>`;
+            result +=`<tr><td>${arr[i].id}</td><td>${arr[i].name}</td><td>${arr[i].price}</td><td><button id="edit${arr[i].id}" onclick="editProduct(${arr[i].id})">EDIT</button></td></tr>`;
         }
         document.getElementById("output").innerHTML=`<table>
         <tr>
             <th>Product ID</th>
             <th>Product Name</th>
             <th>Product Price</th>
+            <th></th>
+            <th></th>
         </tr>
         ${result}
         </table>`;
         
     }
+    console.log(arr);
+}
+
+function editProduct(id)
+{
+    var product=getProduct(id);
+    document.getElementById("productid").value=product.id;
+    document.getElementById("productname").value=product.name;
+    document.getElementById("productprice").value=product.price;
+    document.getElementById(`add`).style="display:none";
+    document.getElementById(`update`).style="display:inline-block";
+    document.getElementById("update").setAttribute("onclick", `updateProduct(${id})`);
+    
+
+}
+
+function getProduct(id)
+{
+    for(let i=0; i<arr.length; i++)
+    {
+        if(arr[i].id==id)
+        {
+            return arr[i];
+        }
+    }
+}
+
+
+function updateProduct(id)
+{
+    for(let i=0; i<arr.length; i++)
+    {
+        if(arr[i].id==id)
+        {
+            arr[i].id=document.getElementById("productid").value;
+            arr[i].name=document.getElementById("productname").value;
+            arr[i].price=document.getElementById("productprice").value;
+        }
+    }
+    display();
 }
 
 

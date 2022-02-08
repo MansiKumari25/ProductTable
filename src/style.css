@@ -44,6 +44,10 @@ form .inp{
     font-weight: 700;
 }
 
+#update{
+    display: none;
+}
+
 #output{
     padding: 5%;
 }
