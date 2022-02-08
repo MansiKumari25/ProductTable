@@ -74,6 +74,7 @@ function insertData(pid, pname, pprice)
 function display()
 {
     let result="";
+
     
     if(arr.length ===0 )
     {
@@ -83,7 +84,7 @@ function display()
         
         for(let i=0; i<arr.length; i++)
         {
-            result +=`<tr><td>${arr[i].id}</td><td>${arr[i].name}</td><td>${arr[i].price}</td><td><button id="edit${arr[i].id}" onclick="editProduct(${arr[i].id})">EDIT</button></td></tr>`;
+            result +=`<tr><td>${arr[i].id}</td><td>${arr[i].name}</td><td>${arr[i].price}</td><td><a id="edit${arr[i].id}" onclick="editProduct(${arr[i].id})" href="#">EDIT</a></td></tr>`;
         }
         document.getElementById("output").innerHTML=`<table>
         <tr>
